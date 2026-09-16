@@ -1,0 +1,228 @@
+@import "tailwindcss";
+
+/* ============================================================
+   ДИЗАЙН-СИСТЕМА «ТРАНСГАЗ» — тёмный промышленный премиум
+   Палитра: графит + тёплая бумага + сине-голубое пламя газа («газ — голубое топливо»).
+   Три гарнитуры: дисплей (Unbounded), текст (Onest), техника (JetBrains Mono).
+   ============================================================ */
+
+@theme {
+  --color-ink: #0c0f12; /* базовый графит — тёмные секции */
+  --color-panel: #14181d; /* панели на тёмном */
+  --color-panel-2: #1a1f26; /* вложенные панели */
+  --color-line-dark: #242b33; /* hairline на тёмном */
+  --color-paper: #f4f2ed; /* тёплая бумага — светлые секции */
+  --color-paper-2: #eae7df; /* вложенные поверхности на светлом */
+  --color-line-light: #ddd8cc; /* hairline на светлом */
+  --color-gas: #1b6fe0; /* сине-голубое пламя газа: CTA, цифры, активные состояния */
+  --color-gas-hot: #125cc8; /* hover CTA — глубокий синий (нажатое состояние) */
+  --color-steel: #8fa1b3; /* сталь — второстепенный тёмный */
+  --color-mist: #9aa3ac; /* приглушённый текст на тёмном */
+  --color-smoke: #5b6570; /* приглушённый текст на светлом */
+
+  --font-display: var(--font-unbounded), "Arial Black", sans-serif;
+  --font-sans: var(--font-onest), system-ui, sans-serif;
+  --font-mono: var(--font-jbmono), "Courier New", monospace;
+
+  --animate-marquee: marquee 42s linear infinite;
+  --animate-modal-panel: modal-panel 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-modal-fade: modal-fade 0.2s ease-out;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes modal-panel {
+    from {
+      opacity: 0;
+      transform: translateY(18px) scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  @keyframes modal-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+/* ===== Базовые стили ===== */
+html {
+  scroll-behavior: smooth;
+  /* отступ под sticky-шапку при переходе по якорям */
+  scroll-padding-top: 84px;
+}
+
+@media (max-width: 640px) {
+  html {
+    scroll-padding-top: 68px;
+  }
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-gas);
+  color: #fff;
+}
+
+/* ===== Типографические утилиты ===== */
+.display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.12;
+}
+
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ===== Чертёжная сетка (фон hero) ===== */
+.bp-grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+.bp-grid-light {
+  background-image:
+    linear-gradient(to right, rgb(12 15 18 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(12 15 18 / 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* ===== Reveal-анимация появления ===== */
+.reveal.reveal-armed {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.reveal-armed.reveal-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ===== Формы: подчёркнутые поля (студийный стиль) ===== */
+.field {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--color-line-light);
+  border-radius: 0;
+  padding: 12px 2px;
+  font-size: 16px; /* 16px — без авто-зума на iOS */
+  line-height: 1.4;
+  color: var(--color-ink);
+  transition: border-color 0.2s ease;
+  appearance: none;
+}
+
+.field::placeholder {
+  color: rgb(12 15 18 / 0.38);
+}
+
+.field:focus {
+  outline: none;
+  border-bottom-color: var(--color-gas);
+}
+
+.field[data-invalid="true"] {
+  border-bottom-color: #c4381d;
+}
+
+.field-dark {
+  border-bottom-color: var(--color-line-dark);
+  color: var(--color-paper);
+}
+
+.field-dark::placeholder {
+  color: rgb(244 242 237 / 0.35);
+}
+
+.field-dark:focus {
+  border-bottom-color: var(--color-gas);
+}
+
+/* Кастомный select-шеврон */
+.select-chevron {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%235b6570' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 2px center;
+  padding-right: 26px;
+}
+
+/* ===== Доступность: видимый фокус ===== */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--color-gas);
+  outline-offset: 3px;
+}
+
+/* ===== Уважение к reduced motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal.reveal-armed {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .animate-marquee {
+    animation: none !important;
+  }
+  .animate-modal-panel,
+  .animate-modal-fade {
+    animation: none !important;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* ===== Скроллбар (тонкий, нейтральный) ===== */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(12 15 18 / 0.25) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(12 15 18 / 0.22);
+  border-radius: 8px;
+}

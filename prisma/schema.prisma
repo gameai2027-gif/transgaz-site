@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Заявка с сайта: RFQ-форма и модальные окна «Запросить КП».
+// Данные минимизированы до необходимого (принцип 152-ФЗ, см. src/config/legal.tsx)
+model Lead {
+  id        String   @id @default(cuid())
+  name      String // имя контактного лица
+  company   String // организация
+  phone     String // основной канал связи
+  email     String? // необязательно
+  product   String // тип продукции (enum-строка из src/config/company.ts)
+  volume    String // потребность в объёмах (свободная форма)
+  comment   String? // свободный комментарий
+  source    String   @default("rfq") // rfq | modal | partners
+  createdAt DateTime @default(now())
+}
