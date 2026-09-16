@@ -2,11 +2,17 @@
 
 import { useRef, useState, type FormEvent } from "react";
 import { CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
-import { productOptions, type ProductId } from "@/config/company";
+import { productOptions, type ProductId, company } from "@/config/company";
 import { formatRuPhone, isValidRuPhone } from "@/lib/phone";
 import { useUi } from "./ui-context";
 
-type Status = "idle" | "sending" | "success" | "error";
+/*
+ * Демо-режим статичного экспорта (GitHub Pages): серверных роутов нет,
+ * поэтому вместо ошибки честно сообщаем, что приём заявок отключён.
+ */
+const DEMO_MODE = process.env.NEXT_PUBLIC_DEMO_MODE === "1";
+
+type Status = "idle" | "sending" | "success" | "error" | "demo";
 
 /**
  * Единая форма заявки (секция RFQ и модальное окно).
@@ -70,6 +76,10 @@ export function LeadForm({
       });
       const data = (await res.json()) as { ok: boolean; id?: string; error?: string };
       if (!res.ok || !data.ok) {
+        if (DEMO_MODE) {
+          setStatus("demo");
+          return;
+        }
         setErrorMsg(data.error ?? "Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.");
         setStatus("error");
         return;
@@ -78,9 +88,34 @@ export function LeadForm({
       setStatus("success");
       onDone?.();
     } catch {
+      if (DEMO_MODE) {
+        setStatus("demo");
+        return;
+      }
       setErrorMsg("Проблема с соединением. Проверьте интернет и отправьте ещё раз.");
       setStatus("error");
     }
+  }
+
+  if (status === "demo") {
+    return (
+      <div className="flex flex-col items-start gap-4 py-6" role="status">
+        <CheckCircle2 size={40} className="text-gas" aria-hidden="true" />
+        <div>
+          <h3 className="display text-[20px] uppercase text-ink">Это демо-версия сайта</h3>
+          <p className="mt-3 text-[15px] leading-relaxed text-smoke">
+            В статичном демо приём заявок отключён. В рабочей версии заявка мгновенно
+            уходит менеджеру в CRM и Telegram, а КП готовим в течение двух рабочих часов.
+          </p>
+        </div>
+        <a
+          href={company.phoneHref}
+          className="mono-label text-gas underline underline-offset-4"
+        >
+          Обсудить поставку: {company.phone}
+        </a>
+      </div>
+    );
   }
 
   if (status === "success") {
