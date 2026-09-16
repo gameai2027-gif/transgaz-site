@@ -1,0 +1,78 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+local-*
+.claude
+.z-ai-config
+*.log
+dev.log
+dev.out.log
+test
+prompt
+
+server.log
+# Skills directory
+/skills/
+# === Рабочие артефакты среды (не для публичного репозитория) ===
+/.env
+/.env.*
+/Caddyfile
+/assets/
+/examples/
+/mini-services/
+/.zscripts/
+/.z-ai-config/
+/db/
+/download/
+/upload/
+/agent-ctx/
+/worklog.md
+/dev.log
+/d1.jpg
+/d2.jpg
+/p1.jpg
+/p2.webp
+/t1.jpg
+/h2.png
+/tests/python-runtime-build.sh
+/tests/python-runtime-container.sh
+/tests/database-runtime-build.sh
