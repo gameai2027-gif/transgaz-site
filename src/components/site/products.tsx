@@ -4,6 +4,7 @@ import { products } from "@/config/company";
 import { LeadButton } from "./lead-button";
 import { Reveal } from "./reveal";
 import { SectionHead } from "./section-head";
+import { asset } from "@/lib/asset";
 
 /**
  * Продукция в виде спецификационных листов: моно-таблица параметров,
@@ -16,7 +17,7 @@ export function Products() {
       {/* Фото-полоса: инженерная инфраструктура газового хозяйства */}
       <figure className="relative h-44 w-full overflow-hidden sm:h-60 lg:h-72">
         <Image
-          src="/images/pipelines.jpg"
+          src={asset("/images/pipelines.jpg")}
           alt="Технологические трубопроводы газорегуляторного пункта с жёлтой маркировкой газа"
           fill
           sizes="100vw"

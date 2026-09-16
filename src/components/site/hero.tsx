@@ -2,6 +2,7 @@ import Image from "next/image";
 import { ArrowDownRight, FileText, ClipboardCheck, BadgeCheck } from "lucide-react";
 import { LeadButton } from "./lead-button";
 import { Reveal } from "./reveal";
+import { asset } from "@/lib/asset";
 
 const trust = [
   { icon: BadgeCheck, text: "Работаем с 2018 года" },
@@ -15,7 +16,7 @@ export function Hero() {
       {/* Фотография производства + затемнение + чертёжная сетка */}
       <div className="absolute inset-0" aria-hidden="true">
         <Image
-          src="/images/plant-dusk.jpg"
+          src={asset("/images/plant-dusk.jpg")}
           alt=""
           fill
           priority

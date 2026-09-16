@@ -3,6 +3,7 @@ import { Package, CreditCard, FileCheck, ClipboardList, Map, Truck } from "lucid
 import { conditions } from "@/config/company";
 import { Reveal } from "./reveal";
 import { SectionHead } from "./section-head";
+import { asset } from "@/lib/asset";
 
 const icons = {
   package: Package,
@@ -38,7 +39,7 @@ export function Conditions() {
           <Reveal className="sm:col-span-2 lg:row-span-2">
             <article className="relative flex h-full min-h-[280px] flex-col justify-end overflow-hidden bg-ink text-paper">
               <Image
-                src="/images/tanker.jpg"
+                src={asset("/images/tanker.jpg")}
                 alt="Автоцистерна с сжиженным газом на площадке отгрузки"
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 50vw"

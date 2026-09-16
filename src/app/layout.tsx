@@ -3,6 +3,7 @@ import { Unbounded, Onest, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { UiProvider } from "@/components/site/ui-context";
 import { company } from "@/config/company";
+import { asset } from "@/lib/asset";
 
 const unbounded = Unbounded({
   subsets: ["latin", "cyrillic"],
@@ -49,7 +50,7 @@ export const metadata: Metadata = {
     images: [{ url: "/images/plant-dusk.jpg", width: 1600, height: 1067, alt: "Газоперерабатывающее производство в сумерках" }],
   },
   robots: { index: true, follow: true },
-  icons: { icon: "/icon.svg" },
+  icons: { icon: asset("/icon.svg") },
   alternates: { canonical: "/" },
 };
 

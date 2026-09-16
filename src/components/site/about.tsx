@@ -2,6 +2,7 @@ import Image from "next/image";
 import { company } from "@/config/company";
 import { Reveal } from "./reveal";
 import { SectionHead } from "./section-head";
+import { asset } from "@/lib/asset";
 
 /**
  * О компании: живой текст без маркетингового тумана, подтверждаемые цифры
@@ -24,7 +25,7 @@ export function About() {
             <figure className="relative">
               <div className="relative aspect-[4/3] overflow-hidden">
                 <Image
-                  src="/images/lpg-tank.jpg"
+                  src={asset("/images/lpg-tank.jpg")}
                   alt="Резервуар для хранения сжиженного газа на площадке поставщика"
                   fill
                   sizes="(max-width: 1024px) 100vw, 440px"

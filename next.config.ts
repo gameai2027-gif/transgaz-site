@@ -8,6 +8,10 @@ import type { NextConfig } from "next";
 const isStaticDemo = process.env.STATIC_EXPORT === "1";
 
 const nextConfig: NextConfig = {
+  /* Инлайнится в бандл: basePath для демо на GitHub Pages (см. src/lib/asset.ts) */
+  env: {
+    NEXT_PUBLIC_BASE_PATH: isStaticDemo ? "/transgaz-site" : "",
+  },
   ...(isStaticDemo
     ? {
         output: "export",
